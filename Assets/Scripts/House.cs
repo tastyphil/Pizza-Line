@@ -29,4 +29,14 @@ public class House : MonoBehaviour
         me.SetActive(true);
         transform.position = new Vector3(x,y,z);
     }
+
+    public string GetHouseColor() {
+        return houseColor;
+    }
+
+    public string GetDoorColor() {
+        return doorColor;
+    }
+        
+    
 }

@@ -38,6 +38,7 @@ public class Main : MonoBehaviour
             if (item.transform.parent == null) Destroy(item);
         }
 
+/*
         int counter = 1;
         foreach(var item in houses) {
             var s = item.GetComponent<House>();
@@ -45,6 +46,7 @@ public class Main : MonoBehaviour
             Debug.Log(counter);
             counter++;
         }
+        */
     }
 
     public void GenerateSection(List<GameObject> arr, float x, float y, float z, GameObject parent) {
