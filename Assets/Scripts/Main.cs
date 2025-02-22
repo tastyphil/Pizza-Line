@@ -11,30 +11,39 @@ public class Main : MonoBehaviour
 {
     public static bool shiftOn = true;
     public static string houseSelected, houseDialogue;
-    public GameObject tempHouse, section1, section2;
+    public GameObject tempHouse, section1, section2, timerObj;
+    public Timer timer;
     public List<GameObject> houses;
     public int orderIndex = 0;
 
     public List<Order> callList = new List<Order>();
 
-    public TMP_Text currOrderDisplay, dialogueBox, selectedHouse;
-    public int[] currOrder = new int[5];
+    public TMP_Text currOrderDisplay, dialogueBox, selectedHouse, correct;
+    public int[] currOrder;
     private List<string> pizzaOptions = new List<string> { "Pepperoni", "Cheese", "BBQ Chicken", "Hawaiian", "Bacon n Cheese" };
-
+    public static int correctOrders = 0;
 
     void Start() {
+        timer = timerObj.GetComponent<Timer>();
         GenerateHouses();
-        UpdateCurrOrder();
-        GenerateCalls(10);
-        
+        GenerateCalls(100);
+        ResetParameters();
+        DisplayCall();
     }
 
     // Update is called once per frame
     void Update() {
         selectedHouse.text = houseDialogue;
-        if (!shiftOn) {
-            SceneManager.LoadScene("MainMenu");
+        if (!timer.timerActive) {
+            SceneManager.LoadScene("GameOver");
         }
+    }
+
+    public void ResetParameters()
+    {
+        houseSelected = "";
+        houseDialogue = "";
+        currOrder = new int[5];
     }
 
     public void GenerateHouses() {
@@ -57,17 +66,39 @@ public class Main : MonoBehaviour
     public void DisplayCall() {
         callList[orderIndex].PrintOrder(UnityEngine.Random.Range(1,5));
         dialogueBox.text = callList[orderIndex].GetCallDialogue();
+        UpdateCurrOrder();
+        correct.text = $"Correct: {correctOrders}";
     }
+
+    public void SendOrder() {
+        Order call = callList[orderIndex];
+        Debug.Log(houseSelected);
+        bool correct = (call.IsCorrectTarget(houseSelected) && call.IsCorrectOrder(currOrder)) == true; 
+
+        if (correct) {
+            correctOrders++;
+            AudioManager.Instance.PlaySFX("correct");
+            Debug.Log($"CorrectOrders: {correctOrders}");
+        } else{
+            AudioManager.Instance.PlaySFX("wrong");
+        }
+
+        ResetParameters();
+        orderIndex++;
+        DisplayCall();
+    }
+
     public void GenerateCalls(int n) {
         for (int i = 0; i < n; i++) {
             int[] tempArr = new int[5];
             for (int j = 0; j < 5; j++) {
-                tempArr[j] = UnityEngine.Random.Range(1, 10/n);
+                tempArr[j] = UnityEngine.Random.Range(1, 10);
             }
             callList.Add(new Order(houses[UnityEngine.Random.Range(0,houses.Count)], tempArr));
         }
     }
     public void AddToOrder(string s) {
+        AudioManager.Instance.PlaySFX("click");
         currOrder[pizzaOptions.IndexOf(s)]++;
         UpdateCurrOrder();
     }

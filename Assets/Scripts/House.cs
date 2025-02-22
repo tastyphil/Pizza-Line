@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class House : MonoBehaviour
 {
@@ -22,8 +23,10 @@ public class House : MonoBehaviour
     }
 
     public void OnMouseDown() {
-        Main.houseDialogue = "Selected:\n" + $"> House: {houseColor}\n> Door: {doorColor}";
-        Main.UpdateSelectedHouse(houseColor + "_" + doorColor);
+        if (!EventSystem.current.IsPointerOverGameObject()) {
+            Main.houseDialogue = "Selected:\n" + $"> House: {houseColor}\n> Door: {doorColor}";
+            Main.UpdateSelectedHouse(houseColor + "_" + doorColor);
+        }
     }
 
     public void InitPos(float x, float y, float z) {

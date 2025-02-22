@@ -19,9 +19,11 @@ public class Order
         House script = target.GetComponent<House>();
         string[] house_door = s.Split("_");
 
-        bool correctHouse = script.GetHouseColor().ToLower().Equals(house_door[0]);
-        bool correctDoor = script.GetDoorColor().ToLower().Equals(house_door[1]);
+        bool correctHouse = script.GetHouseColor().Equals(house_door[0]);
+        bool correctDoor = script.GetDoorColor().Equals(house_door[1]);
 
+        //Debug.Log(script.GetHouseColor() + " " + house_door[0]);
+        //Debug.Log(script.GetDoorColor() + " " + house_door[1]);
         return correctDoor & correctHouse;
     }
 
