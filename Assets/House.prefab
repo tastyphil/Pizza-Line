@@ -145,6 +145,7 @@ MonoBehaviour:
   - {fileID: -5956746614739755173, guid: d230fb6e1ad69784fa45485fcc57005f, type: 3}
   houseColor: 
   doorColor: 
+  selectedHouseTxt: {fileID: 0}
 --- !u!61 &5076280434517436407
 BoxCollider2D:
   m_ObjectHideFlags: 0

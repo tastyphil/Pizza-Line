@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class House : MonoBehaviour
@@ -21,8 +22,8 @@ public class House : MonoBehaviour
     }
 
     public void OnMouseDown() {
-        Main.houseSelected = houseColor + "_" + doorColor;
-        Debug.Log(Main.houseSelected);
+        Main.houseDialogue = "Selected:\n" + $"> House: {houseColor}\n> Door: {doorColor}";
+        Main.UpdateSelectedHouse(houseColor + "_" + doorColor);
     }
 
     public void InitPos(float x, float y, float z) {
