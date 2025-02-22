@@ -8,7 +8,7 @@ public class CorrectOrders_GameOver : MonoBehaviour
     void Start()
     {
         AudioManager.Instance.PlayMusic("menu");
-        txt.text = $"Correct Orders: {Main.correctOrders}";
+        txt.text = $"Correct Orders: {GameParameter.Instance.getCorrectOrders()}";
     }
 
     // Update is called once per frame

@@ -24,6 +24,7 @@ public class Main : MonoBehaviour
     public static int correctOrders = 0;
 
     void Start() {
+        GameParameter.Instance.setCorrectOrders(0);
         timer = timerObj.GetComponent<Timer>();
         GenerateHouses();
         GenerateCalls(100);
@@ -36,6 +37,7 @@ public class Main : MonoBehaviour
         selectedHouse.text = houseDialogue;
         if (!timer.timerActive) {
             SceneManager.LoadScene("GameOver");
+            GameParameter.Instance.setCorrectOrders(correctOrders);
         }
     }
 
